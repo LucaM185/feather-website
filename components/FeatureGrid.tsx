@@ -11,64 +11,85 @@ interface FeatureCardProps {
   children: React.ReactNode; // The "Front" visual
   className?: string;
   iconColorClass?: string;
+  showOnMobile?: boolean;
 }
 
-const FeatureCard: React.FC<FeatureCardProps> = ({ 
-  icon: Icon, 
-  title, 
-  description, 
-  gradient, 
+const FeatureCard: React.FC<FeatureCardProps> = ({
+  icon: Icon,
+  title,
+  description,
+  gradient,
   backgroundMedia,
-  children, 
+  children,
   className,
-  iconColorClass = "text-white"
+  iconColorClass = "text-white",
+  showOnMobile = true
 }) => {
   return (
-  <div className={`group transform-gpu [will-change:transform] [backface-visibility:hidden] transition-transform duration-300 hover:scale-[1.03] ${className}`}>
-    <div className="relative h-full rounded-3xl overflow-hidden [clip-path:inset(0_round_1.5rem)] isolate bg-zinc-900 border border-white/5 [backface-visibility:hidden]">
-      {backgroundMedia}
-      {/* Hover Background Gradient (Fades In) */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+    <>
+      <div className={`hidden md:block group transform-gpu [will-change:transform] [backface-visibility:hidden] transition-transform duration-300 hover:scale-[1.03] ${className}`}>
+        <div className="relative h-full rounded-3xl overflow-hidden [clip-path:inset(0_round_1.5rem)] isolate bg-zinc-900 border border-white/5 [backface-visibility:hidden]">
+          {backgroundMedia}
+          {/* Hover Background Gradient (Fades In) */}
+          <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
 
-      <div className="relative h-full flex flex-col p-8 z-10">
-        {/* Persistent Header (Icon + Title) - Stays exact same place */}
-        <div className="flex items-center gap-3 mb-6 shrink-0">
-          <div className={`p-2 rounded-lg bg-white/10 backdrop-blur-sm group-hover:bg-white/20 transition-colors`}>
-            <Icon className={`w-6 h-6 ${iconColorClass} group-hover:text-white transition-colors`} />
+          <div className="relative h-full flex flex-col p-8 z-10">
+            {/* Persistent Header (Icon + Title) - Stays exact same place */}
+            <div className="flex items-center gap-3 mb-6 shrink-0">
+              <div className={`p-2 rounded-lg bg-white/10 backdrop-blur-sm group-hover:bg-white/20 transition-colors`}>
+                <Icon className={`w-6 h-6 ${iconColorClass} group-hover:text-white transition-colors`} />
+              </div>
+              <h3 className="text-xl font-bold text-white tracking-tight">{title}</h3>
+            </div>
+
+            {/* Body Content Container */}
+            <div className="relative flex-1 min-h-[120px]">
+              {/* Front Visual (Fades Out) */}
+              <div className="absolute inset-0 flex flex-col justify-end transition-all duration-300 group-hover:opacity-0 group-hover:translate-y-2">
+                {children}
+              </div>
+
+              {/* Back Description (Fades In) */}
+              <div className="absolute inset-0 flex flex-col justify-center transition-all duration-300 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0">
+                <p className="text-white/90 font-medium leading-relaxed text-lg">
+                  {description}
+                </p>
+              </div>
+            </div>
           </div>
-          <h3 className="text-xl font-bold text-white tracking-tight">{title}</h3>
-                </div>
+        </div>
+      </div>
 
-        {/* Body Content Container */}
-        <div className="relative flex-1 min-h-[120px]">
-          {/* Front Visual (Fades Out) */}
-          <div className="absolute inset-0 flex flex-col justify-end transition-all duration-300 group-hover:opacity-0 group-hover:translate-y-2">
-            {children}
-          </div>
-
-          {/* Back Description (Fades In) */}
-          <div className="absolute inset-0 flex flex-col justify-center transition-all duration-300 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0">
-            <p className="text-white/90 font-medium leading-relaxed text-lg">
+      {/* Mobile Version */}
+      {showOnMobile && (
+        <div className="md:hidden">
+          <div className="rounded-2xl overflow-hidden bg-zinc-900 border border-white/5 p-5 min-h-[160px] flex flex-col justify-between">
+            <div className="flex items-center gap-3 mb-3 shrink-0">
+              <div className={`p-2 rounded-lg bg-white/10 backdrop-blur-sm`}>
+                <Icon className={`w-5 h-5 ${iconColorClass}`} />
+              </div>
+              <h3 className="text-base font-bold text-white tracking-tight">{title}</h3>
+            </div>
+            <p className="text-white/75 font-medium leading-relaxed text-xs">
               {description}
             </p>
           </div>
-                </div>
-            </div>
         </div>
-    </div>
+      )}
+    </>
   );
 };
 
 const FeatureGrid: React.FC = () => {
   return (
-    <section className="w-full py-24 px-4 md:px-6 bg-zinc-950">
+    <section className="w-full py-16 md:py-24 px-4 md:px-6 bg-zinc-950">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8 }}
-          className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-6 auto-rows-[280px]"
+          className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-4 md:gap-6 auto-rows-auto md:auto-rows-[280px]"
         >
           {/* SAM - Largest */}
           <FeatureCard 
@@ -133,6 +154,7 @@ const FeatureGrid: React.FC = () => {
             description="Adaptive edge detection enhances texture without adding noise artifacts. Making stacking effortless and precise."
             gradient="from-zinc-600 to-zinc-400"
             iconColorClass="text-zinc-300"
+            showOnMobile={false}
           >
              <div className="mt-auto">
                 <div className="flex items-center justify-between text-xs text-zinc-500 font-mono mb-2">
@@ -153,6 +175,7 @@ const FeatureGrid: React.FC = () => {
              description="Designed for MacBook usage. Intuitive gestures make image navigation effortless. The entire UI is ergonomically optimized for trackpad speed and precision."
              gradient="from-emerald-600 to-teal-500"
              iconColorClass="text-emerald-400"
+             showOnMobile={false}
           >
              <div className="flex flex-col gap-2 mt-auto">
                  <div className="h-8 w-full bg-zinc-800/50 rounded border border-white/5 flex items-center px-3">
