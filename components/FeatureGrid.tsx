@@ -75,7 +75,7 @@ const FeatureGrid: React.FC = () => {
             className="col-span-1 md:col-span-6 lg:col-span-8 lg:row-span-2"
             icon={Sparkles}
             title="SAM Masks"
-            description="Segment anything instantly and keep masks glued to your subject across frames."
+            description="Segment anything instantly with many masks."
             gradient="from-blue-600 to-indigo-500"
             iconColorClass="text-blue-300"
             backgroundMedia={
@@ -130,7 +130,7 @@ const FeatureGrid: React.FC = () => {
             className="col-span-1 md:col-span-2 lg:col-span-4"
             icon={Aperture}
             title="Smart Sharpness"
-            description="Adaptive edge detection enhances texture without adding noise artifacts. Perfect for printing large formats."
+            description="Adaptive edge detection enhances texture without adding noise artifacts. Making stacking effortless and precise."
             gradient="from-zinc-600 to-zinc-400"
             iconColorClass="text-zinc-300"
           >
@@ -145,12 +145,12 @@ const FeatureGrid: React.FC = () => {
              </div>
           </FeatureCard>
 
-          {/* Layers Masks */}
+          {/* Trackpad Centered */}
           <FeatureCard
              className="col-span-1 md:col-span-2 lg:col-span-4"
              icon={Layers}
-             title="Non-Destructive"
-             description="Edit, re-edit, and undo indefinitely. Your original RAW file is never touched."
+             title="Trackpad Centered"
+             description="Designed for MacBook usage. Intuitive gestures make image navigation effortless. The entire UI is ergonomically optimized for trackpad speed and precision."
              gradient="from-emerald-600 to-teal-500"
              iconColorClass="text-emerald-400"
           >
