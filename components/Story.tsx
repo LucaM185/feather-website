@@ -21,7 +21,7 @@ const Story: React.FC = () => {
             I'm a 21yo CS student from Italy and I always wondered how cool it would be to build a real camera with the processing of a phone.
           </p>
           <p>
-            While on a trip on the Italian Alps the idea randomly struck me: <span className="text-white">I can actually build something to make computational photography accessible.</span>
+            While on a trip on the Italian Alps it randomly struck me: <span className="text-white">I can actually build something to make computational photography accessible.</span>
           </p>
           <p>
             I built a prototype editor in 2 weeks, then I designed a new system from scratch on 20 sheets of A3 paper spread over 2 desks. 

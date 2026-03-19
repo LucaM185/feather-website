@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const GALLERY_IMAGES = [
   { id: 'stack-reference', src: '/images/stack-reference.png', label: 'Stack Reference', type: 'image' as const },
-  { id: 'sam-infill', src: '/images/feather-SAM-INFILL.m4v', label: 'SAM Inpainting', type: 'video' as const },
+  { id: 'sam-infill', src: '/images/feather-SAM-INFILL.mp4', label: 'SAM Inpainting', type: 'video' as const, poster: '/images/feather-SAM-INFILL-poster.png' },
 ];
 
 const variants = {
@@ -110,6 +110,9 @@ const ImageGallery: React.FC = () => {
                   controls
                   autoPlay
                   loop
+                  preload="metadata"
+                  poster={current.poster}
+                  muted
                 />
               ) : (
                 <motion.img
