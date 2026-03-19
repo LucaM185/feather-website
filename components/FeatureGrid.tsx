@@ -82,7 +82,7 @@ const FeatureGrid: React.FC = () => {
               <>
                 <video
                   className="absolute inset-0 w-full h-full object-cover"
-                  src="/images/feather-SAM.m4v"
+                  src="/images/feather-SAM.mp4"
                   autoPlay
                   loop
                   muted
