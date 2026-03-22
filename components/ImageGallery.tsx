@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const GALLERY_IMAGES = [
+  { id: 'reference-unstacked', src: '/images/reference-unstacked.jpg', label: 'Simple picture, edited', type: 'image' as const },
+  { id: 'reference-stacked', src: '/images/reference-stacked.jpg', label: '50 images stacked, edited', type: 'image' as const },
   { id: 'stack-reference', src: '/images/stack-reference.png', label: 'Stack Reference', type: 'image' as const },
   { id: 'sam-infill', src: '/images/feather-SAM-INFILL.mp4', label: 'SAM Inpainting', type: 'video' as const, poster: '/images/feather-SAM-INFILL-poster.png' },
 ];
@@ -145,7 +147,7 @@ const ImageGallery: React.FC = () => {
 
         {/* Label + dots */}
         <div className="mt-5 flex flex-col items-center gap-3">
-          <p className="text-zinc-400 font-mono text-sm">{current.label}</p>
+          <p className="text-zinc-400 font-mono text-base md:text-sm">{current.label}</p>
           <div className="flex gap-2">
             {GALLERY_IMAGES.map((_, i) => (
               <button

@@ -40,9 +40,10 @@ const Hero: React.FC = () => {
             <span>Brain.</span>
           </span>
         </h1>
-        <div className="w-full flex flex-nowrap justify-center items-center gap-x-2 md:gap-x-3 text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight whitespace-nowrap">
-          <div className="relative h-[1.3em] w-[10ch] md:w-[6ch]">
-            <div className="absolute right-0 h-[1.3em] w-[10ch] md:w-[11ch] overflow-hidden text-right flex items-center justify-end">
+        {/* Desktop version with rotating words */}
+        <div className="hidden md:flex w-full flex-row justify-center items-center gap-x-2 md:gap-x-3 text-6xl lg:text-7xl font-bold tracking-tight whitespace-nowrap">
+          <div className="relative h-[1.3em] w-[6ch]">
+            <div className="absolute right-0 h-[1.3em] w-[11ch] overflow-hidden text-right flex items-center justify-end">
               <AnimatePresence mode="wait">
                 <motion.span
                   key={words[index]}
@@ -58,6 +59,12 @@ const Hero: React.FC = () => {
             </div>
           </div>
           <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70 pb-1">Heart.</span>
+        </div>
+
+        {/* Mobile version - fixed text */}
+        <div className="md:hidden text-4xl font-bold tracking-tight text-center whitespace-nowrap">
+          <span className="text-blue-400">Creator's</span>
+          <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70 ml-2"> Heart.</span>
         </div>
       </motion.div>
 
