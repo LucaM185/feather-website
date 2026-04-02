@@ -4,7 +4,7 @@ import { ChevronDown, Apple, Monitor } from 'lucide-react';
 
 const words = ["Camera's", "Creator's", "Full Frame", "Real"];
 
-const Hero: React.FC = () => {
+const Hero: React.FC<{ onPurchase: () => void }> = ({ onPurchase }) => {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -74,11 +74,11 @@ const Hero: React.FC = () => {
         transition={{ delay: 0.5, duration: 0.8 }}
         className="flex gap-4 mb-24 z-10"
       >
-        <button className="flex items-center gap-2 px-6 py-3 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-xl transition-all duration-300 group">
+        <button onClick={onPurchase} className="flex items-center gap-2 px-6 py-3 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-xl transition-all duration-300 group">
           <Apple className="w-5 h-5 group-hover:fill-current" />
           <span className="font-medium">macOS</span>
         </button>
-        <button className="flex items-center gap-2 px-6 py-3 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-xl transition-all duration-300 group">
+        <button onClick={onPurchase} className="flex items-center gap-2 px-6 py-3 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-xl transition-all duration-300 group">
           <Monitor className="w-5 h-5 text-zinc-400 group-hover:text-blue-400" />
           <span className="font-medium">Windows</span>
         </button>

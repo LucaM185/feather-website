@@ -1,11 +1,99 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const GALLERY_IMAGES = [
-  { id: 'reference-unstacked', src: '/images/reference-unstacked.jpg', label: 'Simple picture, edited', type: 'image' as const },
-  { id: 'reference-stacked', src: '/images/reference-stacked.jpg', label: '50 images stacked, edited', type: 'image' as const },
-  { id: 'stack-reference', src: '/images/stack-reference.png', label: 'Stack Reference', type: 'image' as const },
-  { id: 'sam-infill', src: '/images/feather-SAM-INFILL.mp4', label: 'SAM Inpainting', type: 'video' as const, poster: '/images/feather-SAM-INFILL-poster.png' },
+const ComparisonSlider: React.FC<{ src1: string; src2: string; label1: string; label2: string }> = ({ src1, src2, label1, label2 }) => {
+  const [position, setPosition] = useState(50);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isDragging = useRef(false);
+
+  const updatePosition = useCallback((clientX: number) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
+    setPosition((x / rect.width) * 100);
+  }, []);
+
+  useEffect(() => {
+    const onMouseMove = (e: MouseEvent) => { if (isDragging.current) updatePosition(e.clientX); };
+    const onMouseUp = () => { isDragging.current = false; };
+    const onTouchMove = (e: TouchEvent) => {
+      if (isDragging.current) { e.preventDefault(); updatePosition(e.touches[0].clientX); }
+    };
+    const onTouchEnd = () => { isDragging.current = false; };
+
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+    window.addEventListener('touchmove', onTouchMove, { passive: false });
+    window.addEventListener('touchend', onTouchEnd);
+
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', onMouseUp);
+      window.removeEventListener('touchmove', onTouchMove);
+      window.removeEventListener('touchend', onTouchEnd);
+    };
+  }, [updatePosition]);
+
+  const startDrag = (e: React.MouseEvent | React.TouchEvent) => {
+    isDragging.current = true;
+    if ('touches' in e) updatePosition(e.touches[0].clientX);
+    else updatePosition(e.clientX);
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative w-full bg-black select-none cursor-col-resize"
+      style={{ height: 420 }}
+      onMouseDown={startDrag}
+      onTouchStart={startDrag}
+    >
+      {/* Right image (stacked) */}
+      <img src={src2} alt={label2} draggable={false}
+        className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+        style={{ clipPath: `inset(0 0 0 ${position}%)` }}
+      />
+      {/* Left image (single) */}
+      <img src={src1} alt={label1} draggable={false}
+        className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+        style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
+      />
+      {/* Divider line */}
+      <div className="absolute top-0 bottom-0 w-px bg-white/70 pointer-events-none" style={{ left: `${position}%` }} />
+      {/* Handle */}
+      <div
+        className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-9 h-9 rounded-full bg-white shadow-xl flex items-center justify-center pointer-events-none"
+        style={{ left: `${position}%` }}
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M10 15l-3-3 3-3" />
+          <path d="M14 9l3 3-3 3" />
+        </svg>
+      </div>
+      {/* Labels */}
+      <span className="absolute bottom-3 left-3 text-xs text-white bg-black/60 px-2 py-1 rounded pointer-events-none">{label1}</span>
+      <span className="absolute bottom-3 right-3 text-xs text-white bg-black/60 px-2 py-1 rounded pointer-events-none">{label2}</span>
+    </div>
+  );
+};
+
+type GalleryItem =
+  | { id: string; src: string; label: string; type: 'image' }
+  | { id: string; src: string; label: string; type: 'video'; poster: string }
+  | { id: string; src: string; src2: string; label: string; label1: string; label2: string; type: 'comparison' };
+
+const GALLERY_IMAGES: GalleryItem[] = [
+  {
+    id: 'reference-comparison',
+    src: '/images/reference-unstacked.jpg',
+    src2: '/images/reference-stacked.jpg',
+    label: 'Drag to compare',
+    label1: 'Simple picture, edited',
+    label2: '50 images stacked, edited',
+    type: 'comparison',
+  },
+  { id: 'stack-reference', src: '/images/stack-reference.png', label: 'Stack Reference', type: 'image' },
+  { id: 'sam-infill', src: '/images/feather-SAM-INFILL.mp4', label: 'SAM Inpainting', type: 'video', poster: '/images/feather-SAM-INFILL-poster.png' },
 ];
 
 const variants = {
@@ -98,7 +186,20 @@ const ImageGallery: React.FC = () => {
           {/* Sliding image/video */}
           <div className="relative flex-1 overflow-hidden rounded-xl border border-white/10 shadow-2xl" style={{ minHeight: 260 }}>
             <AnimatePresence initial={false} custom={direction} mode="wait">
-              {current.type === 'video' ? (
+              {current.type === 'comparison' ? (
+                <motion.div
+                  key={current.id}
+                  custom={direction}
+                  variants={variants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  onMouseDown={() => setIsAutoRotating(false)}
+                >
+                  <ComparisonSlider src1={current.src} src2={current.src2} label1={current.label1} label2={current.label2} />
+                </motion.div>
+              ) : current.type === 'video' ? (
                 <motion.video
                   key={current.id}
                   src={current.src}
