@@ -37,7 +37,8 @@ const App: React.FC = () => {
   const [userEmail, setUserEmail] = useState<string | null>(
     () => localStorage.getItem('feather_user_email')
   );
-  const [isPaid, setIsPaid] = useState<boolean | null>(null); // null = unknown
+  const [isPaid, setIsPaid] = useState<boolean | null>(null); // null = checking
+  const [licenseLoading, setLicenseLoading] = useState(() => !!localStorage.getItem('feather_auth_token'));
   const pendingDownloadRef = useRef(false);
   const nonceRef = useRef<[string, string] | null>(null);
 
@@ -46,6 +47,7 @@ const App: React.FC = () => {
   };
 
   const checkLicense = async (accessToken: string): Promise<boolean> => {
+    setLicenseLoading(true);
     try {
       const res = await fetch(`${SUPABASE_URL}/functions/v1/issue-license`, {
         method: 'POST',
@@ -63,6 +65,8 @@ const App: React.FC = () => {
       console.error('issue-license error:', err);
       setIsPaid(false);
       return false;
+    } finally {
+      setLicenseLoading(false);
     }
   };
 
@@ -172,7 +176,7 @@ const App: React.FC = () => {
       </nav>
 
       <main className="flex flex-col items-center w-full">
-        <Hero onPurchase={handlePurchase} />
+        <Hero onPurchase={handlePurchase} loading={licenseLoading} />
         <SubPixelSection />
         <ImageGallery />
         <FeatureGrid />
