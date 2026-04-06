@@ -78,8 +78,8 @@ const Hero: React.FC<{ onPurchase: () => void; loading?: boolean }> = ({ onPurch
           <Apple className="w-5 h-5 group-hover:fill-current" />
           <span className="font-medium">macOS</span>
         </button>
-        <button disabled={loading} onClick={onPurchase} className="flex items-center gap-2 px-6 py-3 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-xl transition-all duration-300 group disabled:opacity-40 disabled:cursor-not-allowed">
-          <Monitor className="w-5 h-5 text-zinc-400 group-hover:text-blue-400" />
+        <button disabled className="flex items-center gap-2 px-6 py-3 bg-zinc-900 border border-zinc-800 rounded-xl transition-all duration-300 group opacity-40 cursor-not-allowed">
+          <Monitor className="w-5 h-5 text-zinc-400" />
           <span className="font-medium">Windows (Coming Soon)</span>
         </button>
       </motion.div>

@@ -120,7 +120,8 @@ const App: React.FC = () => {
         callback: handleGoogleCredential,
         auto_select: false,
         cancel_on_tap_outside: true,
-        nonce: nonce[1], // pass the hashed nonce to Google
+        nonce: nonce[1],
+        error_callback: () => console.log('GSI initialization error'),
       });
     };
 
@@ -131,7 +132,6 @@ const App: React.FC = () => {
       script.id = SCRIPT_ID;
       script.src = 'https://accounts.google.com/gsi/client';
       script.async = true;
-      script.defer = true;
       script.onload = initGoogle;
       document.head.appendChild(script);
     }
@@ -139,6 +139,7 @@ const App: React.FC = () => {
 
   // Called by Hero when the user clicks macOS or Windows
   const handlePurchase = () => {
+    if (licenseLoading) return;
     if (isPaid) {
       window.location.href = 'https://cdn.feather-editor.it/Feather.zip';
     } else if (userEmail) {
