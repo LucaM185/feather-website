@@ -18,16 +18,13 @@ const Story: React.FC = () => {
 
         <div className="handwritten text-xl md:text-3xl leading-relaxed text-zinc-300 space-y-8">
           <p>
-            I'm a 21yo CS student from Italy and I always wondered how cool it would be to build a real camera with the processing of a phone.
+            I'm a 21yo CS student from Italy and I always wondered how cool it would be to have a camera with the processing of a phone.
           </p>
           <p>
-            While on a trip on the Italian Alps it randomly struck me: <span className="text-white">I can actually build something to make computational photography accessible.</span>
-          </p>
-          <p>
-            I built a prototype editor in 2 weeks, then I designed a new system from scratch on 20 sheets of A3 paper spread over 2 desks. 
+            I decided to do something about it, I designed a system from scratch on 20 sheets of A3 paper spread over 2 desks, then spent months building and optimizing algorithms. 
           </p>
           <p className="text-center text-white text-2xl md:text-4xl mt-12 rotate-1">
-            After months, Feather is here
+            Feather is the result of that.
           </p>
         </div>
 
