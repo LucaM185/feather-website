@@ -37,9 +37,9 @@ const App: React.FC = () => {
   const [userEmail, setUserEmail] = useState<string | null>(
     () => localStorage.getItem('feather_user_email')
   );
-  const [isPaid, setIsPaid] = useState<boolean | null>(null); // null = checking
+  const [hasLicense, setHasLicense] = useState(false);
   const [licenseLoading, setLicenseLoading] = useState(() => !!localStorage.getItem('feather_auth_token'));
-  const pendingDownloadRef = useRef(false);
+  const pendingBuyRef = useRef(false);
   const nonceRef = useRef<[string, string] | null>(null);
 
   const redirectToStripe = (email: string) => {
@@ -58,12 +58,11 @@ const App: React.FC = () => {
         body: '{}',
       });
       const paid = res.status === 200;
-      setIsPaid(paid);
       console.log('issue-license status:', res.status, 'paid:', paid);
+      setHasLicense(paid);
       return paid;
     } catch (err) {
       console.error('issue-license error:', err);
-      setIsPaid(false);
       return false;
     } finally {
       setLicenseLoading(false);
@@ -97,14 +96,25 @@ const App: React.FC = () => {
 
     const paid = await checkLicense(accessToken);
 
-    if (pendingDownloadRef.current) {
-      pendingDownloadRef.current = false;
-      if (paid) {
-        window.location.href = 'https://cdn.feather-editor.it/Feather.zip';
-      } else {
-        redirectToStripe(email);
-      }
+    if (pendingBuyRef.current) {
+      pendingBuyRef.current = false;
+      if (!paid) redirectToStripe(email);
     }
+  };
+
+  const handleBuyAccess = async () => {
+    const token = localStorage.getItem('feather_auth_token');
+    if (token) {
+      const paid = await checkLicense(token);
+      if (!paid && userEmail) redirectToStripe(userEmail);
+      return;
+    }
+    pendingBuyRef.current = true;
+    (window as any).google?.accounts.id.prompt((notification: any) => {
+      if (notification.isSkippedMoment?.() || notification.isDismissedMoment?.()) {
+        pendingBuyRef.current = false;
+      }
+    });
   };
 
   useEffect(() => {
@@ -137,47 +147,43 @@ const App: React.FC = () => {
     }
   }, []);
 
-  // Called by Hero when the user clicks macOS or Windows
-  const handlePurchase = () => {
-    if (licenseLoading) return;
-    if (isPaid) {
-      window.location.href = 'https://cdn.feather-editor.it/Feather.zip';
-    } else if (userEmail) {
-      redirectToStripe(userEmail);
-    } else {
-      pendingDownloadRef.current = true;
-      (window as any).google?.accounts.id.prompt((notification: any) => {
-        if (notification.isSkippedMoment?.() || notification.isDismissedMoment?.()) {
-          pendingDownloadRef.current = false;
-        }
-      });
-    }
+  const handleDownload = () => {
+    window.location.href = 'https://cdn.feather-editor.it/Feather.zip';
   };
 
   return (
     <div className="min-h-screen bg-black text-white selection:bg-white/20 selection:text-white">
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 backdrop-blur-md bg-black/50 border-b border-white/5">
         <div className="text-xl font-bold tracking-tighter">Feather</div>
-        {userEmail && (
-          <div className="flex items-center gap-3">
-            <span className="text-sm text-zinc-400 max-w-[200px] truncate">{userEmail}</span>
-            <button
-              onClick={() => {
-                localStorage.removeItem('feather_user_email');
-                localStorage.removeItem('feather_auth_token');
-                setUserEmail(null);
-                (window as any).google?.accounts.id.disableAutoSelect();
-              }}
-              className="text-sm text-zinc-500 hover:text-white transition-colors"
-            >
-              Sign out
-            </button>
-          </div>
-        )}
+        <div className="flex items-center gap-3">
+          {userEmail && (
+            <>
+              <span className="text-sm text-zinc-400 max-w-[200px] truncate">{userEmail}</span>
+              <button
+                onClick={() => {
+                  localStorage.removeItem('feather_user_email');
+                  localStorage.removeItem('feather_auth_token');
+                  setUserEmail(null);
+                  (window as any).google?.accounts.id.disableAutoSelect();
+                }}
+                className="text-sm text-zinc-500 hover:text-white transition-colors"
+              >
+                Sign out
+              </button>
+            </>
+          )}
+          <button
+            onClick={hasLicense ? undefined : handleBuyAccess}
+            disabled={hasLicense}
+            className="text-sm font-medium px-4 py-2 bg-white text-black rounded-lg hover:bg-zinc-200 transition-colors disabled:opacity-70 disabled:cursor-default"
+          >
+            {hasLicense ? 'You have a License' : 'Buy Access'}
+          </button>
+        </div>
       </nav>
 
       <main className="flex flex-col items-center w-full">
-        <Hero onPurchase={handlePurchase} loading={licenseLoading} />
+        <Hero onPurchase={handleDownload} loading={licenseLoading} />
         <SubPixelSection />
         <ImageGallery />
         <FeatureGrid />

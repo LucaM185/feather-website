@@ -72,16 +72,19 @@ const Hero: React.FC<{ onPurchase: () => void; loading?: boolean }> = ({ onPurch
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.8 }}
-        className="flex gap-4 mb-24 z-10"
+        className="absolute bottom-28 z-10 flex flex-col items-center gap-3 px-4"
       >
-        <button disabled={loading} onClick={onPurchase} className="flex items-center gap-2 px-6 py-3 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-xl transition-all duration-300 group disabled:opacity-40 disabled:cursor-not-allowed">
-          <Apple className="w-5 h-5 group-hover:fill-current" />
-          <span className="font-medium">macOS</span>
-        </button>
-        <button disabled className="flex items-center gap-2 px-6 py-3 bg-zinc-900 border border-zinc-800 rounded-xl transition-all duration-300 group opacity-40 cursor-not-allowed">
-          <Monitor className="w-5 h-5 text-zinc-400" />
-          <span className="font-medium">Windows (Coming Soon)</span>
-        </button>
+        <span className="text-sm font-medium tracking-wide text-zinc-300">Download Here:</span>
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+          <button disabled={loading} onClick={onPurchase} className="flex items-center gap-2 px-6 py-3 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-xl transition-all duration-300 group disabled:opacity-40 disabled:cursor-not-allowed">
+            <Apple className="w-5 h-5 group-hover:fill-current" />
+            <span className="font-medium">macOS (Apple Silicon)</span>
+          </button>
+          <button disabled className="flex items-center gap-2 px-6 py-3 bg-zinc-900 border border-zinc-800 rounded-xl transition-all duration-300 group opacity-40 cursor-not-allowed">
+            <Monitor className="w-5 h-5 text-zinc-400" />
+            <span className="font-medium">Windows (Coming Soon)</span>
+          </button>
+        </div>
       </motion.div>
 
       <motion.button
