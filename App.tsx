@@ -69,11 +69,34 @@ const App: React.FC = () => {
     }
   };
 
-  // On page load, check license if token exists
+  // On page load, check license if token exists, or pick up a session from an OAuth redirect
   useEffect(() => {
-    const token = localStorage.getItem('feather_auth_token');
-    if (token) checkLicense(token);
+    (async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        const email = session.user.email ?? '';
+        setUserEmail(email);
+        localStorage.setItem('feather_user_email', email);
+        localStorage.setItem('feather_auth_token', session.access_token);
+        const paid = await checkLicense(session.access_token);
+        if (localStorage.getItem('feather_pending_buy') === '1') {
+          localStorage.removeItem('feather_pending_buy');
+          if (!paid && email) redirectToStripe(email);
+        }
+        return;
+      }
+      const token = localStorage.getItem('feather_auth_token');
+      if (token) checkLicense(token);
+    })();
   }, []);
+
+  const redirectToGoogleLogin = async () => {
+    if (pendingBuyRef.current) localStorage.setItem('feather_pending_buy', '1');
+    await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: window.location.origin },
+    });
+  };
 
   const handleGoogleCredential = async (response: { credential: string }) => {
     const { email } = parseJWTPayload(response.credential);
@@ -110,9 +133,14 @@ const App: React.FC = () => {
       return;
     }
     pendingBuyRef.current = true;
-    (window as any).google?.accounts.id.prompt((notification: any) => {
+    const g = (window as any).google;
+    if (!g?.accounts?.id) {
+      await redirectToGoogleLogin();
+      return;
+    }
+    g.accounts.id.prompt((notification: any) => {
       if (notification.isSkippedMoment?.() || notification.isDismissedMoment?.()) {
-        pendingBuyRef.current = false;
+        redirectToGoogleLogin();
       }
     });
   };
