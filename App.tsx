@@ -94,7 +94,7 @@ const App: React.FC = () => {
     if (pendingBuyRef.current) localStorage.setItem('feather_pending_buy', '1');
     await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: window.location.origin },
+      options: { redirectTo: 'https://feather-editor.it' },
     });
   };
 
