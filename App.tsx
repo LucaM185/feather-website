@@ -188,11 +188,14 @@ const App: React.FC = () => {
             <>
               <span className="text-sm text-zinc-400 max-w-[200px] truncate">{userEmail}</span>
               <button
-                onClick={() => {
+                onClick={async () => {
                   localStorage.removeItem('feather_user_email');
                   localStorage.removeItem('feather_auth_token');
+                  localStorage.removeItem('feather_pending_buy');
                   setUserEmail(null);
+                  setHasLicense(false);
                   (window as any).google?.accounts.id.disableAutoSelect();
+                  await supabase.auth.signOut();
                 }}
                 className="text-sm text-zinc-500 hover:text-white transition-colors"
               >
