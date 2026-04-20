@@ -178,7 +178,7 @@ const App: React.FC = () => {
   const handleDownload = () => {
     window.location.href = 'https://cdn.feather-editor.it/Feather-Stable.dmg'; // dmg should work this time
   };
-
+ 
   return (
     <div className="min-h-screen bg-black text-white selection:bg-white/20 selection:text-white">
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 backdrop-blur-md bg-black/50 border-b border-white/5">
