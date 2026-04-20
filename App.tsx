@@ -176,7 +176,7 @@ const App: React.FC = () => {
   }, []);
 
   const handleDownload = () => {
-    window.location.href = 'https://cdn.feather-editor.it/Feather-Stable.dmg';
+    window.location.href = 'https://cdn.feather-editor.it/Feather-Stable.dmg'; // dmg should work this time
   };
 
   return (
