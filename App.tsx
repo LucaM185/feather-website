@@ -238,7 +238,7 @@ const App: React.FC = () => {
             disabled={hasLicense}
             className="text-sm font-medium px-4 py-2 bg-white text-black rounded-lg hover:bg-zinc-200 transition-colors disabled:opacity-70 disabled:cursor-default"
           >
-            {hasLicense ? 'You have a License' : 'Buy Access'}
+            {hasLicense ? 'You have a License' : 'Buy Access to Pro'}
           </button>
         </div>
       </nav>
