@@ -40,10 +40,15 @@ const App: React.FC = () => {
   const [hasLicense, setHasLicense] = useState(false);
   const [licenseLoading, setLicenseLoading] = useState(() => !!localStorage.getItem('feather_auth_token'));
   const pendingBuyRef = useRef(false);
+  const pendingDownloadRef = useRef(false);
   const nonceRef = useRef<[string, string] | null>(null);
 
   const redirectToStripe = (email: string) => {
     window.location.href = `${STRIPE_URL}?prefilled_email=${encodeURIComponent(email)}`;
+  };
+
+  const startDownload = () => {
+    window.location.href = 'https://cdn.feather-editor.it/Feather-Stable.dmg';
   };
 
   const checkLicense = async (accessToken: string): Promise<boolean> => {
@@ -83,6 +88,10 @@ const App: React.FC = () => {
           localStorage.removeItem('feather_pending_buy');
           if (!paid && email) redirectToStripe(email);
         }
+        if (localStorage.getItem('feather_pending_download') === '1') {
+          localStorage.removeItem('feather_pending_download');
+          startDownload();
+        }
         return;
       }
       const token = localStorage.getItem('feather_auth_token');
@@ -92,6 +101,7 @@ const App: React.FC = () => {
 
   const redirectToGoogleLogin = async () => {
     if (pendingBuyRef.current) localStorage.setItem('feather_pending_buy', '1');
+    if (pendingDownloadRef.current) localStorage.setItem('feather_pending_download', '1');
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: { redirectTo: 'https://feather-editor.it' },
@@ -122,6 +132,11 @@ const App: React.FC = () => {
     if (pendingBuyRef.current) {
       pendingBuyRef.current = false;
       if (!paid) redirectToStripe(email);
+    }
+
+    if (pendingDownloadRef.current) {
+      pendingDownloadRef.current = false;
+      startDownload();
     }
   };
 
@@ -176,7 +191,22 @@ const App: React.FC = () => {
   }, []);
 
   const handleDownload = () => {
-    window.location.href = 'https://cdn.feather-editor.it/Feather-Stable.dmg'; // dmg should work this time
+    const token = localStorage.getItem('feather_auth_token');
+    if (token) {
+      startDownload();
+      return;
+    }
+    pendingDownloadRef.current = true;
+    const g = (window as any).google;
+    if (!g?.accounts?.id) {
+      redirectToGoogleLogin();
+      return;
+    }
+    g.accounts.id.prompt((notification: any) => {
+      if (notification.isSkippedMoment?.() || notification.isDismissedMoment?.()) {
+        redirectToGoogleLogin();
+      }
+    });
   };
   
   return (
