@@ -11,7 +11,7 @@ import Footer from './components/Footer';
 // Get your Client ID from https://console.cloud.google.com → APIs & Services → Credentials
 // Add your site's origin to "Authorized JavaScript origins" (e.g. http://localhost:5173)
 const GOOGLE_CLIENT_ID = '1011411866342-dbiq1cdoiciptmpv63b19aqghj5i0qfm.apps.googleusercontent.com';
-const STRIPE_URL = 'https://buy.stripe.com/4gM00kfe8719cIMbo38AE00';
+const STRIPE_URL = 'https://buy.stripe.com/eVqeVe3vq1GP5gkeAf8AE01';
 const SUPABASE_URL = 'https://yfegmloncjaoyzhmnoyk.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_UplZm3WQVagiE0Ait4RNeA_68xIpoLR'; // TODO: replace with your anon key
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
