@@ -153,6 +153,15 @@ const App: React.FC = () => {
       await redirectToGoogleLogin();
       return;
     }
+    const nonce = await generateNonce();
+    nonceRef.current = nonce;
+    g.accounts.id.initialize({
+      client_id: GOOGLE_CLIENT_ID,
+      callback: handleGoogleCredential,
+      auto_select: false,
+      cancel_on_tap_outside: true,
+      nonce: nonce[1],
+    });
     g.accounts.id.prompt((notification: any) => {
       if (notification.isSkippedMoment?.() || notification.isDismissedMoment?.()) {
         redirectToGoogleLogin();
@@ -190,7 +199,7 @@ const App: React.FC = () => {
     }
   }, []);
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     const token = localStorage.getItem('feather_auth_token');
     if (token) {
       startDownload();
@@ -202,6 +211,15 @@ const App: React.FC = () => {
       redirectToGoogleLogin();
       return;
     }
+    const nonce = await generateNonce();
+    nonceRef.current = nonce;
+    g.accounts.id.initialize({
+      client_id: GOOGLE_CLIENT_ID,
+      callback: handleGoogleCredential,
+      auto_select: false,
+      cancel_on_tap_outside: true,
+      nonce: nonce[1],
+    });
     g.accounts.id.prompt((notification: any) => {
       if (notification.isSkippedMoment?.() || notification.isDismissedMoment?.()) {
         redirectToGoogleLogin();
