@@ -163,7 +163,7 @@ const App: React.FC = () => {
       nonce: nonce[1],
     });
     g.accounts.id.prompt((notification: any) => {
-      if (notification.isSkippedMoment?.() || notification.isDismissedMoment?.()) {
+      if (notification.isSkippedMoment?.() || notification.isDismissedMoment?.() || notification.isNotDisplayed?.()) {
         redirectToGoogleLogin();
       }
     });
@@ -221,7 +221,7 @@ const App: React.FC = () => {
       nonce: nonce[1],
     });
     g.accounts.id.prompt((notification: any) => {
-      if (notification.isSkippedMoment?.() || notification.isDismissedMoment?.()) {
+      if (notification.isSkippedMoment?.() || notification.isDismissedMoment?.() || notification.isNotDisplayed?.()) {
         redirectToGoogleLogin();
       }
     });
