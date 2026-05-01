@@ -3,11 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const faqs = [
   {
-    question: 'I have trouble with login or purchase (todo)',
+    question: 'I have trouble with login or purchase',
+    videoUrl: 'https://www.youtube.com/embed/NoM8oj7JxhA',
     duration: '2 min',
   },
   {
-    question: 'I would like a walkthrough of the features (todo)',
+    question: 'I would like a walkthrough of the features',
+    videoUrl: 'https://www.youtube.com/embed/UaofiuitYOs',
     duration: null,
   },
 ];
