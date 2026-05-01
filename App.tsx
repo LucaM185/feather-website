@@ -5,6 +5,7 @@ import SubPixelSection from './components/SubPixelSection';
 import ImageGallery from './components/ImageGallery';
 import FeatureGrid from './components/FeatureGrid';
 import Story from './components/Story';
+import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 
 // ── CONFIG ─────────────────────────────────────────────────────────────────────
@@ -267,6 +268,7 @@ const App: React.FC = () => {
         <ImageGallery />
         <FeatureGrid />
         <Story />
+        <FAQ />
       </main>
 
       <Footer />

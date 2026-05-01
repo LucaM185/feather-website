@@ -26,7 +26,7 @@ const SubPixelSection: React.FC = () => {
             Sub-Pixel Alignment
           </span>
           <br />
-          <span className="text-zinc-400">with Smart Blending.</span>
+          <span className="text-zinc-400">with Smart Blending (beta).</span>
         </motion.h2>
       </div>
 
