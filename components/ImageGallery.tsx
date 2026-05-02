@@ -216,6 +216,7 @@ const ImageGallery: React.FC = () => {
                   preload="metadata"
                   poster={current.poster}
                   muted
+                  playsInline
                 />
               ) : (
                 <motion.img

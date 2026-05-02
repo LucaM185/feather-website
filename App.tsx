@@ -264,11 +264,11 @@ const App: React.FC = () => {
 
       <main className="flex flex-col items-center w-full">
         <Hero onPurchase={handleDownload} loading={licenseLoading} />
+        <FAQ />
         <SubPixelSection />
         <ImageGallery />
         <FeatureGrid />
         <Story />
-        <FAQ />
       </main>
 
       <Footer />

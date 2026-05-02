@@ -15,7 +15,7 @@ const faqs = [
 ];
 
 const FAQ: React.FC = () => {
-  const [open, setOpen] = useState<number | null>(null);
+  const [open, setOpen] = useState<number | null>(1);
 
   return (
     <section className="w-full py-24 px-6 bg-black flex justify-center">
