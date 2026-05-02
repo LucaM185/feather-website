@@ -13,6 +13,11 @@ const Footer: React.FC = () => {
           lucam185.feather@gmail.com
         </a>
       </p>
+      <p>
+        <a href="/terms" className="text-zinc-500 hover:text-zinc-300 transition-colors underline underline-offset-2">
+          Terms of Service
+        </a>
+      </p>
     </footer>
   );
 };
