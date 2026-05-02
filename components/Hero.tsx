@@ -85,6 +85,12 @@ const Hero: React.FC<{ onPurchase: () => void; loading?: boolean }> = ({ onPurch
             <span className="font-medium">Windows (Coming Soon)</span>
           </button>
         </div>
+        <p className="text-xs text-zinc-600 mt-1">
+          By downloading you agree to our{' '}
+          <a href="/terms" className="underline underline-offset-2 hover:text-zinc-400 transition-colors">
+            Terms of Service
+          </a>
+        </p>
       </motion.div>
 
       <motion.button
