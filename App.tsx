@@ -12,7 +12,7 @@ import Footer from './components/Footer';
 // Get your Client ID from https://console.cloud.google.com → APIs & Services → Credentials
 // Add your site's origin to "Authorized JavaScript origins" (e.g. http://localhost:5173)
 const GOOGLE_CLIENT_ID = '1011411866342-dbiq1cdoiciptmpv63b19aqghj5i0qfm.apps.googleusercontent.com';
-const STRIPE_URL = 'https://buy.stripe.com/eVqeVe3vq1GP5gkeAf8AE01';
+const CHECKOUT_URL = 'https://lucamig.gumroad.com/l/feather';
 const SUPABASE_URL = 'https://yfegmloncjaoyzhmnoyk.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_UplZm3WQVagiE0Ait4RNeA_68xIpoLR'; // TODO: replace with your anon key
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -44,8 +44,8 @@ const App: React.FC = () => {
   const pendingDownloadRef = useRef(false);
   const nonceRef = useRef<[string, string] | null>(null);
 
-  const redirectToStripe = (email: string) => {
-    window.location.href = `${STRIPE_URL}?prefilled_email=${encodeURIComponent(email)}`;
+  const redirectToCheckout = (email: string) => {
+    window.location.href = `${CHECKOUT_URL}?email=${encodeURIComponent(email)}`;
   };
 
   const startDownload = () => {
@@ -87,7 +87,7 @@ const App: React.FC = () => {
         const paid = await checkLicense(session.access_token);
         if (localStorage.getItem('feather_pending_buy') === '1') {
           localStorage.removeItem('feather_pending_buy');
-          if (!paid && email) redirectToStripe(email);
+          if (!paid && email) redirectToCheckout(email);
         }
         if (localStorage.getItem('feather_pending_download') === '1') {
           localStorage.removeItem('feather_pending_download');
@@ -132,7 +132,7 @@ const App: React.FC = () => {
 
     if (pendingBuyRef.current) {
       pendingBuyRef.current = false;
-      if (!paid) redirectToStripe(email);
+      if (!paid) redirectToCheckout(email);
     }
 
     if (pendingDownloadRef.current) {
@@ -145,7 +145,7 @@ const App: React.FC = () => {
     const token = localStorage.getItem('feather_auth_token');
     if (token) {
       const paid = await checkLicense(token);
-      if (!paid && userEmail) redirectToStripe(userEmail);
+      if (!paid && userEmail) redirectToCheckout(userEmail);
       return;
     }
     pendingBuyRef.current = true;
@@ -257,7 +257,7 @@ const App: React.FC = () => {
             disabled={hasLicense}
             className="text-sm font-medium px-4 py-2 bg-white text-black rounded-lg hover:bg-zinc-200 transition-colors disabled:opacity-70 disabled:cursor-default"
           >
-            {hasLicense ? 'You have a License' : 'Buy Access to Pro'}
+            {hasLicense ? 'You have a License' : 'Buy Access to Pro (Do not buy, we are testing)'}
           </button>
         </div>
       </nav>
