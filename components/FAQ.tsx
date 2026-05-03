@@ -10,7 +10,7 @@ const faqs = [
   {
     question: 'I would like a walkthrough of the features',
     videoUrl: 'https://www.youtube.com/embed/UaofiuitYOs',
-    duration: null,
+    duration: '6 min',
   },
 ];
 
