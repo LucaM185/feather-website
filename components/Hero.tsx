@@ -85,19 +85,6 @@ const Hero: React.FC<{ onPurchase: () => void; loading?: boolean }> = ({ onPurch
             <span className="font-medium">Windows (Coming Soon)</span>
           </button>
         </div>
-        <a
-          href="https://www.producthunt.com/products/feather-18?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_campaign=badge-feather-14"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-1"
-        >
-          <img
-            alt="Feather - Photo editor with local AI | Product Hunt"
-            src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=1135553&theme=dark&period=daily&t=1777813160033"
-            width="250"
-            height="54"
-          />
-        </a>
         <p className="text-xs text-zinc-600 mt-1">
           By downloading you agree to our{' '}
           <a href="/terms" className="underline underline-offset-2 hover:text-zinc-400 transition-colors">
@@ -105,6 +92,20 @@ const Hero: React.FC<{ onPurchase: () => void; loading?: boolean }> = ({ onPurch
           </a>
         </p>
       </motion.div>
+
+      <a
+        href="https://www.producthunt.com/products/feather-18?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_campaign=badge-feather-14"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="absolute bottom-6 left-6 z-10"
+      >
+        <img
+          alt="Feather - Photo editor with local AI | Product Hunt"
+          src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=1135553&theme=dark&period=daily&t=1777813160033"
+          width="250"
+          height="54"
+        />
+      </a>
 
       <motion.button
         onClick={scrollToFeatures}
