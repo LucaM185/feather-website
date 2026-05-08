@@ -266,7 +266,7 @@ const App: React.FC = () => {
         <Hero onPurchase={handleDownload} loading={licenseLoading} />
         <FAQ />
         <SubPixelSection />
-        <ImageGallery />
+        {/* <ImageGallery /> */}
         <FeatureGrid />
         <Story />
       </main>
