@@ -199,7 +199,7 @@ const FeatureGrid: React.FC = () => {
             iconColorClass="text-amber-400"
             backgroundMedia={
               <>
-                <div className="absolute inset-0 bg-[url('/images/firstimage.png')] bg-cover bg-center opacity-30" />
+                <div className="absolute inset-0 bg-[url('/images/firstimage.jpg')] bg-cover bg-center opacity-30" />
                 <div className="absolute inset-0 bg-black/45" />
               </>
             }

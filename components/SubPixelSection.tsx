@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const PREVIEWS = [
-  { id: 'worst', src: '/images/worst_sharpness.JPG', label: 'Low Sharpness' },
-  { id: 'mid', src: '/images/mid_sharpness.JPG', label: 'Medium Sharpness' },
-  { id: 'best', src: '/images/best_sharpness.JPG', label: 'Best image' },
-  { id: 'hybrid', src: '/images/hybrid_result.jpg', label: 'Feather Hybrid Result' },
+  { id: 'worst', src: '/images/worst_sharpness.JPG', label: 'Low Sharpness', alt: 'Photo with low sharpness from a single handheld exposure' },
+  { id: 'mid', src: '/images/mid_sharpness.JPG', label: 'Medium Sharpness', alt: 'Photo with medium sharpness from a single handheld exposure' },
+  { id: 'best', src: '/images/best_sharpness.JPG', label: 'Best image', alt: 'Sharpest single frame from the input burst' },
+  { id: 'hybrid', src: '/images/hybrid_result.jpg', label: 'Feather Hybrid Result', alt: 'Sharp fused result produced by Feather sub-pixel alignment and smart blending' },
 ];
 
 const SubPixelSection: React.FC = () => {
@@ -45,17 +45,17 @@ const SubPixelSection: React.FC = () => {
             <div className="relative w-full aspect-[4/3] transition-transform duration-500 ease-out group-hover:scale-[1.02]">
               <img
                 src="/images/worst_sharpness.JPG"
-                alt="Input Frame 1"
+                alt="Low-sharpness input frame from a handheld photo burst"
                 className="absolute top-0 left-0 w-full h-full object-cover rounded-xl border border-white/10 shadow-2xl opacity-40 transform -translate-x-8 -translate-y-8 transition-transform duration-500 group-hover:-translate-x-10 group-hover:-translate-y-10"
               />
               <img
                 src="/images/mid_sharpness.JPG"
-                alt="Input Frame 2"
+                alt="Medium-sharpness input frame from a handheld photo burst"
                 className="absolute top-0 left-0 w-full h-full object-cover rounded-xl border border-white/10 shadow-2xl opacity-60 transform -translate-x-4 -translate-y-4 transition-transform duration-500 group-hover:-translate-x-6 group-hover:-translate-y-6"
               />
               <img
                 src="/images/best_sharpness.JPG"
-                alt="Reference Frame"
+                alt="Sharpest reference frame from the input burst"
                 className="absolute top-0 left-0 w-full h-full object-cover rounded-xl border border-white/20 shadow-2xl z-10"
               />
 
@@ -84,7 +84,7 @@ const SubPixelSection: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-purple-500/20 blur-xl rounded-full"></div>
               <img
                 src="/images/hybrid_result.jpg"
-                alt="Processed Result"
+                alt="Sharp fused photo produced by Feather's sub-pixel alignment and smart blending"
                 className="relative w-full h-full object-cover rounded-xl border border-white/20 shadow-2xl z-20"
               />
               <div className="absolute -bottom-12 left-0 right-0 text-center">
@@ -137,7 +137,7 @@ const SubPixelSection: React.FC = () => {
                       }`}
                   >
                     <div className={`w-full aspect-[4/3] rounded-lg overflow-hidden border ${activeImage.id === item.id ? 'border-white/50' : 'border-white/10 group-hover:border-white/30'}`}>
-                      <img src={item.src} alt="" className="w-full h-full object-cover" />
+                      <img src={item.src} alt={item.alt} className="w-full h-full object-cover" />
                     </div>
                     <div className="w-full">
                       <p className={`text-sm font-medium ${activeImage.id === item.id ? 'text-white' : 'text-zinc-400 group-hover:text-zinc-200'}`}>
@@ -174,7 +174,7 @@ const SubPixelSection: React.FC = () => {
                   <img
                     src={activeImage.src}
                     className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
-                    alt={activeImage.label}
+                    alt={activeImage.alt}
                   />
                 </div>
               </div>

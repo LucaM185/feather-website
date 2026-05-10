@@ -3,11 +3,72 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Feather</title>
+    <meta name="theme-color" content="#000000" />
+
+    <title>Feather — High-Performance Photo Editor for Mac</title>
+    <meta name="description" content="Feather is a fast, native macOS photo editor with sub-pixel precision, AI-powered SAM masking, focus stacking, and a color mixer. Built for photographers who want speed without compromise." />
+    <meta name="keywords" content="photo editor, mac photo editor, raw editor, photography software, focus stacking, sub-pixel, SAM masking, color mixer, Feather editor" />
+    <meta name="author" content="Feather" />
+    <link rel="canonical" href="https://feather-editor.it/" />
+
     <link rel="icon" type="image/png" href="/images/feather.png" />
+    <link rel="apple-touch-icon" href="/images/feather.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Feather" />
+    <meta property="og:title" content="Feather — High-Performance Photo Editor for Mac" />
+    <meta property="og:description" content="A fast, native macOS photo editor with sub-pixel precision, AI masking, focus stacking, and a color mixer." />
+    <meta property="og:url" content="https://feather-editor.it/" />
+    <meta property="og:image" content="https://feather-editor.it/images/og-image.jpg" />
+    <meta property="og:image:alt" content="Feather photo editor for macOS" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Feather — High-Performance Photo Editor for Mac" />
+    <meta name="twitter:description" content="A fast, native macOS photo editor with sub-pixel precision, AI masking, focus stacking, and a color mixer." />
+    <meta name="twitter:image" content="https://feather-editor.it/images/og-image.jpg" />
+
+    <!-- Robots -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Feather",
+      "operatingSystem": "macOS",
+      "applicationCategory": "MultimediaApplication",
+      "url": "https://feather-editor.it/",
+      "image": "https://feather-editor.it/images/og-image.jpg",
+      "description": "A high-performance native macOS photo editor with sub-pixel precision, AI-powered SAM masking, focus stacking, and a color mixer.",
+      "offers": {
+        "@type": "Offer",
+        "price": "29.99",
+        "priceCurrency": "USD",
+        "url": "https://lucamig.gumroad.com/l/feather"
+      }
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.youtube.com">
+    <link rel="dns-prefetch" href="https://i.ytimg.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+      /* Pre-hydration styling for the SEO content rendered into #root.
+         React replaces #root on mount, so these styles never apply post-hydration. */
+      .seo-prerender { background:#000; color:#fff; font-family: Inter, system-ui, sans-serif; padding: 2rem 1.5rem; max-width: 960px; margin: 0 auto; line-height: 1.6; }
+      .seo-prerender h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; letter-spacing: -0.02em; margin: 0 0 1rem; }
+      .seo-prerender h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; margin: 2.5rem 0 0.75rem; }
+      .seo-prerender p, .seo-prerender li { color: #d4d4d8; }
+      .seo-prerender ul { padding-left: 1.25rem; }
+      .seo-prerender a { color: #60a5fa; }
+    </style>
   <script type="importmap">
 {
   "imports": {
@@ -21,7 +82,43 @@
 </script>
 </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="seo-prerender">
+        <header>
+          <h1>Feather — High-Performance Photo Editor for Mac</h1>
+          <p>Feather is a fast, native macOS photo editor built for photographers who want speed without compromise. Sub-pixel alignment, AI-powered SAM masking, focus stacking, and a precision color mixer — all running locally on Apple Silicon.</p>
+          <p><a href="https://lucamig.gumroad.com/l/feather">Buy Access to Pro — $29.99</a> · macOS (Apple Silicon) · Windows coming soon</p>
+        </header>
+
+        <section>
+          <h2>Sub-Pixel Alignment with Smart Blending</h2>
+          <p>Feather aligns multiple handheld exposures with sub-pixel precision and fuses the sharpest regions of each frame into a single hybrid result. Get sharper photos than any single shot from your camera, even handheld.</p>
+        </section>
+
+        <section>
+          <h2>Local AI Masking with SAM</h2>
+          <p>Segment-Anything-style masking runs on-device — no cloud round-trips, no subscriptions. Click a subject and Feather isolates it instantly so you can edit, recolor, or replace with full control.</p>
+        </section>
+
+        <section>
+          <h2>Focus Stacking, Color Mixer, and More</h2>
+          <ul>
+            <li>Focus stacking that combines multiple focus distances into a single tack-sharp frame.</li>
+            <li>A color mixer with per-channel hue, saturation, and luminance control.</li>
+            <li>Native RAW support and a GPU-accelerated pipeline tuned for Apple Silicon.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Frequently Asked Questions</h2>
+          <p>Watch short walkthroughs covering installation, the editing workflow, sub-pixel alignment, SAM masking, and licensing on the live site.</p>
+        </section>
+
+        <footer>
+          <p>Feather Editor · <a href="/terms">Terms of Service</a></p>
+        </footer>
+      </div>
+    </div>
   <script type="module" src="/index.tsx"></script>
 </body>
 </html>

@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import Hero from './components/Hero';
 import SubPixelSection from './components/SubPixelSection';
-import ImageGallery from './components/ImageGallery';
 import FeatureGrid from './components/FeatureGrid';
 import Story from './components/Story';
 import FAQ from './components/FAQ';

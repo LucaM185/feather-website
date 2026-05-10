@@ -24,7 +24,7 @@ const Hero: React.FC<{ onPurchase: () => void; loading?: boolean }> = ({ onPurch
   return (
     <section className="relative h-screen w-full flex flex-col items-center justify-center text-center px-4 overflow-hidden bg-black">
       {/* Background Image (30% opacity) */}
-      <div className="absolute inset-0 bg-[url('/images/firstimage.png')] bg-cover bg-center opacity-10 z-0" />
+      <div className="absolute inset-0 bg-[url('/images/firstimage.jpg')] bg-cover bg-center opacity-10 z-0" />
       {/* Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-900/20 rounded-full blur-[120px] -z-10" />
 
@@ -74,7 +74,7 @@ const Hero: React.FC<{ onPurchase: () => void; loading?: boolean }> = ({ onPurch
         transition={{ delay: 0.5, duration: 0.8 }}
         className="absolute bottom-28 z-10 flex flex-col items-center gap-3 px-4"
       >
-        <span className="text-sm font-medium tracking-wide text-zinc-300">Download Here:</span>
+        <span className="text-sm font-medium tracking-wide text-zinc-300">Free Download:</span>
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <button disabled={loading} onClick={onPurchase} className="flex items-center gap-2 px-6 py-3 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-xl transition-all duration-300 group disabled:opacity-40 disabled:cursor-not-allowed">
             <Apple className="w-5 h-5 group-hover:fill-current" />
