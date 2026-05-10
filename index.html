@@ -60,14 +60,51 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-      /* Pre-hydration styling for the SEO content rendered into #root.
-         React replaces #root on mount, so these styles never apply post-hydration. */
-      .seo-prerender { background:#000; color:#fff; font-family: Inter, system-ui, sans-serif; padding: 2rem 1.5rem; max-width: 960px; margin: 0 auto; line-height: 1.6; }
-      .seo-prerender h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; letter-spacing: -0.02em; margin: 0 0 1rem; }
-      .seo-prerender h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; margin: 2.5rem 0 0.75rem; }
-      .seo-prerender p, .seo-prerender li { color: #d4d4d8; }
-      .seo-prerender ul { padding-left: 1.25rem; }
-      .seo-prerender a { color: #60a5fa; }
+      /* Pre-hydration mock of the React app.
+         React's createRoot replaces #root on mount, so these styles never leak post-hydration. */
+      html, body { margin: 0; background: #000; color: #fff; font-family: Inter, system-ui, -apple-system, sans-serif; }
+      .pre { background: #000; color: #fff; min-height: 100vh; }
+      .pre-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; backdrop-filter: blur(12px); background: rgba(0,0,0,0.5); border-bottom: 1px solid rgba(255,255,255,0.05); }
+      .pre-nav-brand { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.04em; }
+      .pre-nav-buy { font-size: 0.875rem; font-weight: 500; padding: 0.5rem 1rem; background: #fff; color: #000; border-radius: 0.5rem; text-decoration: none; }
+      .pre-hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 1rem; overflow: hidden; }
+      .pre-hero-bg { position: absolute; inset: 0; background: url('/images/firstimage.jpg') center/cover; opacity: 0.10; z-index: 0; }
+      .pre-hero-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 600px; background: rgba(30, 58, 138, 0.20); border-radius: 9999px; filter: blur(120px); }
+      .pre-hero h1 { position: relative; z-index: 1; font-size: clamp(2.25rem, 7vw, 4.5rem); font-weight: 700; letter-spacing: -0.025em; margin: 0; line-height: 1.05; background: linear-gradient(to bottom, #fff, rgba(255,255,255,0.7)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+      .pre-hero h1 .accent { color: #60a5fa; -webkit-text-fill-color: #60a5fa; }
+      .pre-hero-cta { position: relative; z-index: 1; margin-top: 3rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
+      .pre-hero-cta-label { font-size: 0.875rem; color: #d4d4d8; }
+      .pre-hero-cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
+      .pre-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: #18181b; border: 1px solid #27272a; border-radius: 0.75rem; color: #fff; font-weight: 500; text-decoration: none; }
+      .pre-btn.disabled { opacity: 0.4; }
+      .pre-section { padding: 6rem 1.5rem; max-width: 1200px; margin: 0 auto; }
+      .pre-section h2 { font-size: clamp(1.75rem, 4vw, 3rem); font-weight: 700; letter-spacing: -0.025em; text-align: center; margin: 0 0 3rem; }
+      .pre-section h2 .grad { background: linear-gradient(to right, #60a5fa, #a855f7); -webkit-background-clip: text; background-clip: text; color: transparent; }
+      .pre-section h2 .muted { color: #a1a1aa; display: block; }
+      .pre-subpixel-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center; max-width: 1100px; margin: 0 auto; }
+      @media (min-width: 768px) { .pre-subpixel-grid { grid-template-columns: 1fr 1fr; } }
+      .pre-subpixel-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 0.75rem; border: 1px solid rgba(255,255,255,0.2); }
+      .pre-subpixel-caption { text-align: center; margin-top: 0.75rem; font-family: ui-monospace, monospace; font-size: 0.875rem; color: #a1a1aa; }
+      .pre-faq { max-width: 42rem; margin: 0 auto; }
+      .pre-faq-item { border: 1px solid #27272a; border-radius: 0.75rem; padding: 1.25rem 1.5rem; margin-bottom: 0.75rem; display: flex; justify-content: space-between; align-items: center; }
+      .pre-faq-question { font-weight: 500; }
+      .pre-faq-duration { font-size: 0.75rem; color: #71717a; background: #27272a; padding: 0.125rem 0.5rem; border-radius: 9999px; }
+      .pre-features { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+      @media (min-width: 768px) { .pre-features { grid-template-columns: repeat(12, 1fr); } }
+      .pre-feature { background: #18181b; border: 1px solid rgba(255,255,255,0.05); border-radius: 1rem; padding: 1.5rem; min-height: 180px; }
+      .pre-feature h3 { font-size: 1.125rem; font-weight: 700; margin: 0 0 0.5rem; }
+      .pre-feature p { color: rgba(255,255,255,0.75); font-size: 0.875rem; margin: 0; line-height: 1.5; }
+      .pre-feature.wide { grid-column: span 1; }
+      @media (min-width: 768px) {
+        .pre-feature.wide { grid-column: span 8; }
+        .pre-feature.tall { grid-column: span 4; }
+        .pre-feature.third { grid-column: span 4; }
+      }
+      .pre-story { max-width: 42rem; margin: 0 auto; padding: 6rem 1.5rem; text-align: center; }
+      .pre-story h2 { font-family: 'Caveat', cursive; font-size: clamp(2rem, 5vw, 3rem); margin: 0 0 2rem; color: rgba(255,255,255,0.9); }
+      .pre-story p { font-family: 'Caveat', cursive; font-size: 1.5rem; line-height: 1.6; color: #d4d4d8; }
+      .pre-footer { padding: 2.5rem 1.5rem; border-top: 1px solid #18181b; text-align: center; color: #52525b; font-size: 0.875rem; }
+      .pre-footer a { color: #a1a1aa; text-decoration: underline; text-underline-offset: 2px; }
     </style>
   <script type="importmap">
 {
@@ -83,39 +120,95 @@
 </head>
   <body>
     <div id="root">
-      <div class="seo-prerender">
-        <header>
-          <h1>Feather — High-Performance Photo Editor for Mac</h1>
-          <p>Feather is a fast, native macOS photo editor built for photographers who want speed without compromise. Sub-pixel alignment, AI-powered SAM masking, focus stacking, and a precision color mixer — all running locally on Apple Silicon.</p>
-          <p><a href="https://lucamig.gumroad.com/l/feather">Buy Access to Pro — $29.99</a> · macOS (Apple Silicon) · Windows coming soon</p>
-        </header>
+      <div class="pre">
+        <nav class="pre-nav">
+          <div class="pre-nav-brand">Feather</div>
+          <a class="pre-nav-buy" href="https://lucamig.gumroad.com/l/feather">Buy Access to Pro ($29.99+tax)</a>
+        </nav>
 
-        <section>
-          <h2>Sub-Pixel Alignment with Smart Blending</h2>
-          <p>Feather aligns multiple handheld exposures with sub-pixel precision and fuses the sharpest regions of each frame into a single hybrid result. Get sharper photos than any single shot from your camera, even handheld.</p>
+        <section class="pre-hero">
+          <div class="pre-hero-bg"></div>
+          <div class="pre-hero-glow"></div>
+          <h1>
+            Phone&apos;s Brain.<br>
+            <span class="accent">Creator&apos;s</span> Heart.
+          </h1>
+          <div class="pre-hero-cta">
+            <span class="pre-hero-cta-label">Download Here:</span>
+            <div class="pre-hero-cta-row">
+              <a class="pre-btn" href="https://lucamig.gumroad.com/l/feather">macOS (Apple Silicon)</a>
+              <span class="pre-btn disabled">Windows (Coming Soon)</span>
+            </div>
+            <p style="font-size: 0.75rem; color: #52525b; margin-top: 0.5rem;">By downloading you agree to our <a href="/terms" style="color: inherit; text-decoration: underline;">Terms of Service</a></p>
+          </div>
         </section>
 
-        <section>
-          <h2>Local AI Masking with SAM</h2>
-          <p>Segment-Anything-style masking runs on-device — no cloud round-trips, no subscriptions. Click a subject and Feather isolates it instantly so you can edit, recolor, or replace with full control.</p>
+        <section class="pre-section">
+          <h2>FAQ</h2>
+          <div class="pre-faq">
+            <div class="pre-faq-item">
+              <span class="pre-faq-question">I have trouble with login or purchase</span>
+              <span class="pre-faq-duration">2 min video</span>
+            </div>
+            <div class="pre-faq-item">
+              <span class="pre-faq-question">I would like a walkthrough of the features</span>
+              <span class="pre-faq-duration">6 min video</span>
+            </div>
+          </div>
         </section>
 
-        <section>
-          <h2>Focus Stacking, Color Mixer, and More</h2>
-          <ul>
-            <li>Focus stacking that combines multiple focus distances into a single tack-sharp frame.</li>
-            <li>A color mixer with per-channel hue, saturation, and luminance control.</li>
-            <li>Native RAW support and a GPU-accelerated pipeline tuned for Apple Silicon.</li>
-          </ul>
+        <section class="pre-section">
+          <h2><span class="grad">Sub-Pixel Alignment</span><span class="muted">with Smart Blending (beta).</span></h2>
+          <div class="pre-subpixel-grid">
+            <figure style="margin: 0;">
+              <img class="pre-subpixel-img" src="/images/best_sharpness.JPG" alt="Sharpest reference frame from a handheld photo burst" loading="lazy">
+              <figcaption class="pre-subpixel-caption">8x Raw Inputs</figcaption>
+            </figure>
+            <figure style="margin: 0;">
+              <img class="pre-subpixel-img" src="/images/hybrid_result.jpg" alt="Sharp fused photo produced by Feather's sub-pixel alignment and smart blending" loading="lazy">
+              <figcaption class="pre-subpixel-caption" style="color: #60a5fa;">Fused Output</figcaption>
+            </figure>
+          </div>
         </section>
 
-        <section>
-          <h2>Frequently Asked Questions</h2>
-          <p>Watch short walkthroughs covering installation, the editing workflow, sub-pixel alignment, SAM masking, and licensing on the live site.</p>
+        <section class="pre-section" style="background: #09090b;">
+          <h2 style="text-align: left; margin-bottom: 2rem;">Features</h2>
+          <div class="pre-features">
+            <div class="pre-feature wide">
+              <h3>SAM Masks</h3>
+              <p>Segment anything instantly with many masks. Powered by the SAM2 model running locally on Apple Silicon — no cloud, no subscriptions.</p>
+            </div>
+            <div class="pre-feature tall">
+              <h3>Color Mixer</h3>
+              <p>Dial in individual color channels with floating-point precision. 8-channel HSL control for fine-grained color grading.</p>
+            </div>
+            <div class="pre-feature third">
+              <h3>Smart Sharpness</h3>
+              <p>Adaptive edge detection enhances texture without adding noise artifacts. Making stacking effortless and precise.</p>
+            </div>
+            <div class="pre-feature third">
+              <h3>Trackpad Centered</h3>
+              <p>Designed for MacBook usage. Intuitive gestures make image navigation effortless. The entire UI is ergonomically optimized for trackpad speed.</p>
+            </div>
+            <div class="pre-feature third">
+              <h3>Reality Synthesis</h3>
+              <p>Expand your canvas or remove distractions. Our generative model understands context, lighting, and texture to fill gaps seamlessly.</p>
+            </div>
+          </div>
         </section>
 
-        <footer>
-          <p>Feather Editor · <a href="/terms">Terms of Service</a></p>
+        <section class="pre-story">
+          <h2>The Story</h2>
+          <p>I&apos;m a 21yo CS student from Italy and I always wondered how cool it would be to have a camera with the processing of a phone.</p>
+          <p>I decided to do something about it — I designed a system from scratch on 20 sheets of A3 paper spread over 2 desks, then spent months building and optimizing algorithms.</p>
+          <p style="color: #fff; font-size: 2rem; margin-top: 2rem;">Feather is the result of that.</p>
+          <p style="font-size: 1.125rem; color: #71717a; margin-top: 2rem;">— Luca Miglioli, Founder</p>
+        </section>
+
+        <footer class="pre-footer">
+          <p>&copy; 2026 Feather. Built in Italy.</p>
+          <p>Need help? <a href="mailto:lucam185.feather@gmail.com">lucam185.feather@gmail.com</a></p>
+          <p><a href="/terms">Terms of Service</a></p>
         </footer>
       </div>
     </div>
