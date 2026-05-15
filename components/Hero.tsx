@@ -73,7 +73,7 @@ const Hero: React.FC<{ onPurchase: () => void; loading?: boolean }> = ({ onPurch
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.8 }}
         className="absolute bottom-28 z-10 flex flex-col items-center gap-3 px-4"
-      >
+      > 
         <span className="text-sm font-medium tracking-wide text-zinc-300">Free Download:</span>
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <button disabled={loading} onClick={onPurchase} className="flex items-center gap-2 px-6 py-3 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-xl transition-all duration-300 group disabled:opacity-40 disabled:cursor-not-allowed">
