@@ -44,10 +44,17 @@ const App: React.FC = () => {
   const nonceRef = useRef<[string, string] | null>(null);
 
   const redirectToCheckout = (email: string) => {
+    (window as any).gtag?.('event', 'payment_link_click', {
+      email: email,
+      timestamp: new Date().toISOString(),
+    });
     window.location.href = `${CHECKOUT_URL}?email=${encodeURIComponent(email)}`;
   };
 
   const startDownload = () => {
+    (window as any).gtag?.('event', 'download_click', {
+      timestamp: new Date().toISOString(),
+    });
     window.location.href = 'https://cdn.feather-editor.it/Feather-Stable.dmg';
   };
 
@@ -100,6 +107,10 @@ const App: React.FC = () => {
   }, []);
 
   const redirectToGoogleLogin = async () => {
+    (window as any).gtag?.('event', 'google_login_click', {
+      intent: pendingBuyRef.current ? 'purchase' : pendingDownloadRef.current ? 'download' : 'login',
+      timestamp: new Date().toISOString(),
+    });
     if (pendingBuyRef.current) localStorage.setItem('feather_pending_buy', '1');
     if (pendingDownloadRef.current) localStorage.setItem('feather_pending_download', '1');
     await supabase.auth.signInWithOAuth({
@@ -121,11 +132,21 @@ const App: React.FC = () => {
 
     if (error || !data.session) {
       console.error('Supabase sign-in error:', error);
+      (window as any).gtag?.('event', 'google_login_failed', {
+        email: email,
+        error: error?.message,
+        timestamp: new Date().toISOString(),
+      });
       return;
     }
 
     const accessToken = data.session.access_token;
     localStorage.setItem('feather_auth_token', accessToken);
+
+    (window as any).gtag?.('event', 'google_login_success', {
+      email: email,
+      timestamp: new Date().toISOString(),
+    });
 
     const paid = await checkLicense(accessToken);
 
@@ -141,6 +162,10 @@ const App: React.FC = () => {
   };
 
   const handleBuyAccess = async () => {
+    (window as any).gtag?.('event', 'buy_access_button_click', {
+      user_authenticated: !!localStorage.getItem('feather_auth_token'),
+      timestamp: new Date().toISOString(),
+    });
     const token = localStorage.getItem('feather_auth_token');
     if (token) {
       const paid = await checkLicense(token);
