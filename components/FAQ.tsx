@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const faqs = [
+interface FAQ {
+  question: string;
+  videoUrl?: string;
+  duration?: string;
+  email?: string;
+}
+
+const faqs: FAQ[] = [
   {
     question: 'I have trouble with login or purchase',
     videoUrl: 'https://www.youtube.com/embed/NoM8oj7JxhA',
@@ -11,6 +18,10 @@ const faqs = [
     question: 'I would like a walkthrough of the features',
     videoUrl: 'https://www.youtube.com/embed/UaofiuitYOs',
     duration: '6 min',
+  },
+  {
+    question: 'I want to suggest a feature',
+    email: 'lucam185.feather@gmail.com',
   },
 ];
 
@@ -73,15 +84,27 @@ const FAQ: React.FC = () => {
                     className="overflow-hidden"
                   >
                     <div className="px-6 pb-6 pt-2">
-                      <div className="relative w-full rounded-lg overflow-hidden bg-zinc-900" style={{ paddingBottom: '56.25%' }}>
-                        <iframe
-                          className="absolute inset-0 w-full h-full"
-                          src={faq.videoUrl}
-                          title={faq.question}
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        />
-                      </div>
+                      {faq.videoUrl ? (
+                        <div className="relative w-full rounded-lg overflow-hidden bg-zinc-900" style={{ paddingBottom: '56.25%' }}>
+                          <iframe
+                            className="absolute inset-0 w-full h-full"
+                            src={faq.videoUrl}
+                            title={faq.question}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        </div>
+                      ) : (
+                        <div className="bg-zinc-900 rounded-lg p-6 text-center">
+                          <p className="text-zinc-400 mb-4">Send your feature requests to:</p>
+                          <a
+                            href={`mailto:${faq.email}`}
+                            className="text-blue-400 hover:text-blue-300 transition-colors font-medium"
+                          >
+                            {faq.email}
+                          </a>
+                        </div>
+                      )}
                     </div>
                   </motion.div>
                 )}

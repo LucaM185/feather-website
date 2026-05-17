@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Apple, Monitor } from 'lucide-react';
 
-const words = ["Camera's", "Creator's", "Full Frame", "Real"];
+const words = ["Private AI", "GenAI Infill", "Color Mixer", "Start Free", "Buy Once", "Smart Selection"];
 
 const Hero: React.FC<{ onPurchase: () => void; loading?: boolean }> = ({ onPurchase, loading = false }) => {
   const [index, setIndex] = useState(0);
@@ -23,8 +23,8 @@ const Hero: React.FC<{ onPurchase: () => void; loading?: boolean }> = ({ onPurch
 
   return (
     <section className="relative h-screen w-full flex flex-col items-center justify-center text-center px-4 overflow-hidden bg-black">
-      {/* Background Image (30% opacity) */}
-      <div className="absolute inset-0 bg-[url('/images/firstimage.jpg')] bg-cover bg-center opacity-10 z-0" />
+      {/* Background Image (10% opacity) */}
+      <div className="absolute inset-0 bg-[url('/images/firstimage.jpg')] bg-cover bg-center opacity-20 z-0" />
       {/* Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-900/20 rounded-full blur-[120px] -z-10" />
 
@@ -32,16 +32,13 @@ const Hero: React.FC<{ onPurchase: () => void; loading?: boolean }> = ({ onPurch
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="space-y-2 mb-12 flex flex-col items-center z-10 w-full max-w-[900px]"
+        className="space-y-[0.4rem] mb-12 flex flex-col items-center z-10 w-full max-w-[900px]"
       >
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70 whitespace-nowrap">
-          <span className="inline-flex items-center gap-x-2 md:gap-x-3">
-            <span>Phone&apos;s</span>
-            <span>Brain.</span>
-          </span>
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70 scale-85 origin-top">
+          <span className="block">Rethink Pictures</span>
         </h1>
         {/* Desktop version with rotating words */}
-        <div className="hidden md:flex w-full flex-row justify-center items-center gap-x-2 md:gap-x-3 text-6xl lg:text-7xl font-bold tracking-tight whitespace-nowrap">
+        <div className="hidden md:flex w-full flex-row justify-center items-center gap-x-2 md:gap-x-3 text-6xl lg:text-7xl font-bold tracking-tight whitespace-nowrap scale-85 origin-top" style={{ marginLeft: '27px' }}>
           <div className="relative h-[1.3em] w-[6ch]">
             <div className="absolute right-0 h-[1.3em] w-[11ch] overflow-hidden text-right flex items-center justify-end">
               <AnimatePresence mode="wait">
@@ -58,13 +55,13 @@ const Hero: React.FC<{ onPurchase: () => void; loading?: boolean }> = ({ onPurch
               </AnimatePresence>
             </div>
           </div>
-          <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70 pb-1">Heart.</span>
+          <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70 pb-1">Editor</span>
         </div>
 
         {/* Mobile version - fixed text */}
-        <div className="md:hidden text-4xl font-bold tracking-tight text-center whitespace-nowrap">
-          <span className="text-blue-400">Creator's</span>
-          <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70 ml-2"> Heart.</span>
+        <div className="md:hidden text-4xl font-bold tracking-tight text-center">
+          <span className="text-blue-400">Private AI</span>
+          <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70 ml-2"> Editor</span>
         </div>
       </motion.div>
 
