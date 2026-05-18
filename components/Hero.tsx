@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Apple, Monitor } from 'lucide-react';
 
-const words = ["Private AI", "GenAI Infill", "Color Mixer", "Start Free", "Buy Once", "Smart Selection"];
+const words = ["On-Device AI", "GenAI Infill", "Color Mixer", "Start Free", "Buy Once", "Smart Selection"];
 
 const Hero: React.FC<{ onPurchase: () => void; loading?: boolean }> = ({ onPurchase, loading = false }) => {
   const [index, setIndex] = useState(0);
@@ -60,7 +60,7 @@ const Hero: React.FC<{ onPurchase: () => void; loading?: boolean }> = ({ onPurch
 
         {/* Mobile version - fixed text */}
         <div className="md:hidden text-4xl font-bold tracking-tight text-center">
-          <span className="text-blue-400">Private AI</span>
+          <span className="text-blue-400">Local AI</span>
           <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70 ml-2"> Editor</span>
         </div>
       </motion.div>
