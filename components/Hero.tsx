@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Apple, Monitor } from 'lucide-react';
 
-const words = ["On-Device AI", "GenAI Infill", "Color Mixer", "Start Free", "Buy Once", "Smart Selection"];
+const words = ["On-Device AI", "Start Free", "Buy Once", "GenAI Infill", "Color Mixer", "Smart Selection"];
 
 const Hero: React.FC<{ onPurchase: () => void; loading?: boolean }> = ({ onPurchase, loading = false }) => {
   const [index, setIndex] = useState(0);
